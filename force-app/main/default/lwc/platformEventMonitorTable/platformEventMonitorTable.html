@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Platform Events Monitor" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template for:each={subscriptionInfos.data} for:item="info">
+                <p key={info.ExternalId}>{info.Name}</p>
+                  <!--
+                  <p>{info.Topic}</p>
+                  <p>{info.Position}</p>
+                  <p>{info.Retries}</p>
+                  <p>{info.Status}</p>
+                  <p>{info.Tip}</p>
+                  <p>{info.Type}</p>
+                  <p>{info.LastError}</p>
+                  -->
+            </template>
+        </div>
+    </lightning-card>
+  </template>
+    <!--
+SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
+              FROM EventBusSubscriber order by Topic, Name LIMIT 100
+-->
