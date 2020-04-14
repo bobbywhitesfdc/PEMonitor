@@ -1,22 +1,57 @@
 <template>
-    <lightning-card title="Platform Events Monitor" icon-name="custom:custom63">
-        <div class="slds-m-around_medium">
-            <template for:each={subscriptionInfos.data} for:item="info">
-                <p key={info.ExternalId}>{info.Name}</p>
-                  <!--
-                  <p>{info.Topic}</p>
-                  <p>{info.Position}</p>
-                  <p>{info.Retries}</p>
-                  <p>{info.Status}</p>
-                  <p>{info.Tip}</p>
-                  <p>{info.Type}</p>
-                  <p>{info.LastError}</p>
-                  -->
+  <div class="slds-box slds-theme_default">
+      <div if:true={subscriberInfo.data}>
+          <table>
+            <tr>
+              <th>
+                Topic
+              </th>
+              <th>
+                Subscriber
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Position
+              </th>
+              <th>
+                Tip
+              </th>
+              <th>
+                Status
+              </th>
+              <th>
+                Retries
+              </th>
+              <th>
+                Last Error
+              </th>
+            </tr>
+
+            <template for:each={subscriberInfo.data} for:item="result">
+              <tr key={result.id}>
+                <td>{result.topic}</td>
+                <td><a href={result.uri}>{result.subscriberName}</a></td>
+                <td>{result.type}</td>
+                <td>{result.position}</td>
+                <td>{result.tip}</td>
+                <td>{result.status}</td>
+                <td>{result.retries}</td>
+                <td>{result.lastError}</td>
+              </tr>
             </template>
-        </div>
-    </lightning-card>
-  </template>
-    <!--
-SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-              FROM EventBusSubscriber order by Topic, Name LIMIT 100
--->
+          </table>
+
+      </div>
+      <div if:true={subscriberInfo.error}>
+          <div class="slds-box slds-theme_error">
+              <h4>Error</h4>
+              Can't get Platform Event Subscriber Information at this time.
+              <template for:each={errorMessages} for:item="message">
+                  <p key={message} class="error-message">{message}</p>
+              </template>
+          </div>
+      </div>
+  </div>
+</template>

@@ -11,10 +11,51 @@ public class PlatformEventMonitoringController {
                      FROM EventBusSubscriber order by Topic, Name LIMIT 100]; }       
     }
     
-    @AuraEnabled
-    public static List<EventBusSubscriber> getInfo(){
+    @AuraEnabled(cacheable=true)
+    public static List<SubscriberInfo> getSubscriberInfo(){
         System.debug('getSubscriptionInfo:' + subscriptionInfo.size());
-        return subscriptionInfo;
+        final List<SubscriberInfo> infos = new List<SubscriberInfo>();
+        for (EventBusSubscriber current : subscriptionInfo) {
+            infos.add(new SubscriberInfo(current));
+        }
+        return infos;
         
+    }
+    public class SubscriberInfo {
+        @AuraEnabled
+        public String topic { get; private set; }
+        @AuraEnabled
+        public String externalId { get; private set; }
+        @AuraEnabled
+        public String subscriberName { get; private set; }
+        @AuraEnabled
+        public Integer position {get; private set; }
+        @AuraEnabled
+        public Integer tip {get; private set;}
+        @AuraEnabled
+        public Integer retries {get; private set; }
+        @AuraEnabled
+        public String status {get; private set; }
+        @AuraEnabled
+        public String type {get; private set; }
+        @AuraEnabled
+        public String id {get; private set; }
+        @AuraEnabled
+        public String uri  {
+            get { return  '/' + externalId; }
+        }
+    
+
+        public SubscriberInfo (final EventBusSubscriber theRecord) {
+            this.externalId = theRecord.ExternalId;
+            this.id = theRecord.Id;
+            this.tip = theRecord.Tip;
+            this.position = theRecord.Position;
+            this.retries = theRecord.Retries;
+            this.type = theRecord.Type;
+            this.topic = theRecord.Topic;
+            this.subscriberName = theRecord.Name;
+            this.status = theRecord.Status;
+        }
     }
 }

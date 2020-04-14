@@ -23,6 +23,11 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Low_Ink_Event__e.Ink_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <pageAccesses>
         <apexPage>PlatformEventMonitoring</apexPage>
         <enabled>false</enabled>
