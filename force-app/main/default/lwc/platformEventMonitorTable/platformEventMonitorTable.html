@@ -1,48 +1,14 @@
 <template>
   <div class="slds-box slds-theme_default">
       <div if:true={subscriberInfo.data}>
-          <table>
-            <tr>
-              <th>
-                Topic
-              </th>
-              <th>
-                Subscriber
-              </th>
-              <th>
-                Type
-              </th>
-              <th>
-                Position
-              </th>
-              <th>
-                Tip
-              </th>
-              <th>
-                Status
-              </th>
-              <th>
-                Retries
-              </th>
-              <th>
-                Last Error
-              </th>
-            </tr>
-
-            <template for:each={subscriberInfo.data} for:item="result">
-              <tr key={result.id}>
-                <td>{result.topic}</td>
-                <td><a href={result.uri}>{result.subscriberName}</a></td>
-                <td>{result.type}</td>
-                <td>{result.position}</td>
-                <td>{result.tip}</td>
-                <td>{result.status}</td>
-                <td>{result.retries}</td>
-                <td>{result.lastError}</td>
-              </tr>
-            </template>
-          </table>
-
+          <div style="height: 300px;">
+              <lightning-datatable
+                      key-field="externalId"
+                      data={subscriberInfo.data}
+                      columns={columns}
+                      hide-checkbox-column="true">
+              </lightning-datatable>
+          </div>    
       </div>
       <div if:true={subscriberInfo.error}>
           <div class="slds-box slds-theme_error">
