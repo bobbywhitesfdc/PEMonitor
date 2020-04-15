@@ -3,12 +3,11 @@
 **/ 
 public class PlatformEventMonitoringController {
     
-    public PlatformEventMonitoringController() {
-        
-    }
+    @testVisible
     public static List<EventBusSubscriber> subscriptionInfo {
         get {return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; }       
+                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; }
+        private set;
     }
     
     @AuraEnabled(cacheable=true)
