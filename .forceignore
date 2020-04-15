@@ -3,6 +3,11 @@
 #
 
 package.xml
+# Explicitly Excluding Sample Platform Event Types, Triggers, and Process Builders on these PE
+**/objects
+**/ExampleEventTrigger.*
+**/ExampleEventTrigger_Test.*
+force-app/main/default/flows/*
 
 # LWC configuration files
 **/jsconfig.json
