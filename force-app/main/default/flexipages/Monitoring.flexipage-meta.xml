@@ -7,7 +7,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Monitoring</masterLabel>
+    <masterLabel>Platform Event Monitoring</masterLabel>
     <template>
         <name>flexipage:defaultAppHomeTemplate</name>
     </template>

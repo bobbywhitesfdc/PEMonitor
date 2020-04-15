@@ -1,8 +1,22 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import getSubscriberInfo from '@salesforce/apex/PlatformEventMonitoringController.getSubscriberInfo';
+
+const columnsDef = [
+    { label: 'Topic', fieldName: 'topic' },
+    { label: 'Subscriber', fieldName: 'uri', type: 'url'
+        , typeAttributes: {label: { fieldName: 'subscriberName' }, target: '_blank'},},
+    { label: 'Type', fieldName: 'type' },
+    { label: 'Position', fieldName: 'position', type: 'number', fixedWidth: '80px'},
+    { label: 'Tip', fieldName: 'tip', type: 'number', fixedWidth: '80px'},
+    { label: 'Status', fieldName: 'status' },
+    { label: 'Retries', fieldName: 'retries', type: 'number' ,fixedWidth: '80px'},
+    { label: 'Last Error', fieldName: 'lastError', wrapText: 'true'},
+];
+
 
 export default class PlatformEventMonitorTable extends LightningElement {
     @wire(getSubscriberInfo) subscriberInfo;
+    @track columns = columnsDef;
 
     get errorMessages() {
         let errors = this.subscriberInfo.error;
