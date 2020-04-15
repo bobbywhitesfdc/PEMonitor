@@ -28,11 +28,13 @@ Next you convert the SFDX source code to package format and deploy it to your Sa
 <p>
 <code>
 sfdx force:source:convert -d temp/ --packagename PEMonitor
-  <br/>
-  sfdx force:mdapi:deploy -d temp/ -u <emp>sandbox_username</emp> -l RunSpecifiedTests -r PlatformEventMonitoringController_Test
-  <br/>
 </code>
-  </p>
+</p>
+<p>
+<code>
+  sfdx force:mdapi:deploy -d temp/ -u <emp>sandbox_username</emp> -l RunSpecifiedTests -r PlatformEventMonitoringController_Test -w 100
+</code>
+</p>
 
 ## Post Deployment Steps
 
