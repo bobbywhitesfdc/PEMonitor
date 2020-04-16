@@ -1,12 +1,21 @@
 /**
 * Custom Controller to show Platform Events Subscriber Status
 **/ 
-public class PlatformEventMonitoringController {
+public with sharing class PlatformEventMonitoringController {
     
     @testVisible
     public static List<EventBusSubscriber> subscriptionInfo {
-        get {return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; }
+        get {
+            Boolean hasCustomPermission = FeatureManagement.checkPermission('Monitor_Platform_Events');
+            if (hasCustomPermission && isSafeObject('EventBusSubscriber')) {
+                return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
+                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; 
+                     }
+            else {
+                List<EventBusSubscriber> subscriptionInfo = new List<EventBusSubscriber>();
+                return subscriptionInfo ;
+            }
+        }    
         private set;
     }
     
@@ -55,6 +64,16 @@ public class PlatformEventMonitoringController {
             this.topic = theRecord.Topic;
             this.subscriberName = theRecord.Name;
             this.status = theRecord.Status;
+        }
+    }
+
+    private static boolean isSafeObject(String objName){
+        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        SObjectType myObj = schemaMap.get(objName);
+        if (myObj.getDescribe().isAccessible() ) { 
+            return true; 
+        }else{
+            return false;
         }
     }
 }

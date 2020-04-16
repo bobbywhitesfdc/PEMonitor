@@ -7,38 +7,40 @@
 SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
               FROM EventBusSubscriber order by Topic, Name LIMIT 100
 -->
-    <apex:dataTable value="{!subscriptionInfo}" var="subscription" id="pe_table" border="1" cellpadding="10">
-        <apex:column >
-            <apex:facet name="header">Topic</apex:facet>
-            <apex:outputText value="{!subscription.topic}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Subscriber Name</apex:facet>
-            <a href="/{!subscription.ExternalId}" target="_blank">{!subscription.Name}</a>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Position</apex:facet>
-            <apex:outputText value="{!subscription.Position}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Retries</apex:facet>
-            <apex:outputText value="{!subscription.Retries}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Status</apex:facet>
-            <apex:outputText value="{!subscription.Status}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Tip</apex:facet>
-            <apex:outputText value="{!subscription.Tip}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Type</apex:facet>
-            <apex:outputText value="{!subscription.Type}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">Last Error</apex:facet>
-            <apex:outputText value="{!subscription.LastError}"/>
-        </apex:column>
-    </apex:dataTable>
+    <apex:pageBlock rendered="{!$Permission.Monitor_Platform_Events}">
+        <apex:dataTable value="{!subscriptionInfo}" var="subscription" id="pe_table" border="1" cellpadding="10">
+            <apex:column >
+                <apex:facet name="header">Topic</apex:facet>
+                <apex:outputText value="{!subscription.topic}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Subscriber Name</apex:facet>
+                <a href="/{!subscription.ExternalId}" target="_blank">{!subscription.Name}</a>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Position</apex:facet>
+                <apex:outputText value="{!subscription.Position}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Retries</apex:facet>
+                <apex:outputText value="{!subscription.Retries}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Status</apex:facet>
+                <apex:outputText value="{!subscription.Status}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Tip</apex:facet>
+                <apex:outputText value="{!subscription.Tip}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Type</apex:facet>
+                <apex:outputText value="{!subscription.Type}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Last Error</apex:facet>
+                <apex:outputText value="{!subscription.LastError}"/>
+            </apex:column>
+        </apex:dataTable>
+    </apex:pageBlock>
 </apex:page>
