@@ -2,21 +2,33 @@
 * Custom Controller to show Platform Events Subscriber Status
 **/ 
 public with sharing class PlatformEventMonitoringController {
+    public static final String MONITORING_PERMISSION = 'Monitor_Platform_Events';
+    public static final String MSG_MISSING_PERMISSIONS = 'User must have permission to monitor platform events! Missing: '
+     + MONITORING_PERMISSION;
     
     @testVisible
     public static List<EventBusSubscriber> subscriptionInfo {
         get {
-            Boolean hasCustomPermission = FeatureManagement.checkPermission('Monitor_Platform_Events');
+            final Boolean hasCustomPermission = FeatureManagement.checkPermission(MONITORING_PERMISSION);
             if (hasCustomPermission && isSafeObject('EventBusSubscriber')) {
                 return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
                      FROM EventBusSubscriber order by Topic, Name LIMIT 100]; 
                      }
             else {
-                List<EventBusSubscriber> subscriptionInfo = new List<EventBusSubscriber>();
-                return subscriptionInfo ;
+                throw new MonitoringException(MSG_MISSING_PERMISSIONS);
             }
         }    
         private set;
+    }
+
+    // Entry point for the VF page
+    public static List<EventBusSubscriber> getResults() {
+        try {
+            return subscriptionInfo;
+        } catch (MonitoringException me) {
+            ApexPages.addMessages(me);
+            return new List<EventBusSubscriber>();
+        }
     }
     
     @AuraEnabled(cacheable=true)
@@ -68,12 +80,12 @@ public with sharing class PlatformEventMonitoringController {
     }
 
     private static boolean isSafeObject(String objName){
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        SObjectType myObj = schemaMap.get(objName);
-        if (myObj.getDescribe().isAccessible() ) { 
-            return true; 
-        }else{
-            return false;
-        }
+        final Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        final SObjectType myObj = schemaMap.get(objName);
+        // Guard against a bad object name
+        return (myObj != null) &&  myObj.getDescribe().isAccessible();
+    }
+
+    public class MonitoringException extends Exception {      
     }
 }
