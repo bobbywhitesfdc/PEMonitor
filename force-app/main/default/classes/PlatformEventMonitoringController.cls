@@ -2,14 +2,15 @@
 * Custom Controller to show Platform Events Subscriber Status
 **/ 
 public with sharing class PlatformEventMonitoringController {
-    
+    private static final Integer EBS_LIMIT_RECORDS = 100;
+
     @testVisible
     public static List<EventBusSubscriber> subscriptionInfo {
         get {
             Boolean hasCustomPermission = FeatureManagement.checkPermission('Monitor_Platform_Events');
             if (hasCustomPermission && isSafeObject('EventBusSubscriber')) {
                 return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; 
+                     FROM EventBusSubscriber order by Topic, Name LIMIT :EBS_LIMIT_RECORDS]; 
                      }
             else {
                 List<EventBusSubscriber> subscriptionInfo = new List<EventBusSubscriber>();
