@@ -4,6 +4,10 @@
         <apexClass>PlatformEventMonitoringController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Monitor_Platform_Events</name>
+    </customPermissions>
     <description>Grant permission to view LWC to monitor Platform Events</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Monitor Platform Events</label>
