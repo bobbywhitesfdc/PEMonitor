@@ -3,10 +3,11 @@
         Platform Event Subscriber Monitoring Page
     </h1>
     <p/>
-    <!--
-SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-              FROM EventBusSubscriber order by Topic, Name LIMIT 100
--->
+    
+    <apex:pageBlock rendered="{!!$Permission.Monitor_Platform_Events}">
+    	<apex:pageMessages showDetail="true" id="errors" />
+    </apex:pageBlock>
+
     <apex:pageBlock rendered="{!$Permission.Monitor_Platform_Events}">
         <apex:dataTable value="{!results}" var="subscription" id="pe_table" border="1" cellpadding="10">
             <apex:column >
@@ -43,5 +44,4 @@ SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError
             </apex:column>
         </apex:dataTable>
     </apex:pageBlock>
-    <apex:pageMessages/>
 </apex:page>
