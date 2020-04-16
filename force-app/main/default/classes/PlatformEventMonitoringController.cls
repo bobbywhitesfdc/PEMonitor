@@ -2,6 +2,7 @@
 * Custom Controller to show Platform Events Subscriber Status
 **/ 
 public with sharing class PlatformEventMonitoringController {
+    private static final Integer EBS_LIMIT_RECORDS = 100;
     public static final String MONITORING_PERMISSION = 'Monitor_Platform_Events';
     public static final String MSG_MISSING_PERMISSIONS = 'User must have permission to monitor platform events! Missing: '
      + MONITORING_PERMISSION;
@@ -12,7 +13,7 @@ public with sharing class PlatformEventMonitoringController {
             final Boolean hasCustomPermission = FeatureManagement.checkPermission(MONITORING_PERMISSION);
             if (hasCustomPermission && isSafeObject('EventBusSubscriber')) {
                 return [SELECT Topic, ExternalId, Name, Position, Retries, Status, Tip, Type, LastError 
-                     FROM EventBusSubscriber order by Topic, Name LIMIT 100]; 
+                     FROM EventBusSubscriber order by Topic, Name LIMIT :EBS_LIMIT_RECORDS]; 
                      }
             else {
                 throw new MonitoringException(MSG_MISSING_PERMISSIONS);
