@@ -5,8 +5,6 @@ public with sharing class PlatformEventMonitoringController {
     private static final Integer EBS_LIMIT_RECORDS = 100;
     private static final String MSG_MISSING_PERMISSIONS = Label.Monitor_Platform_Events; 
     public static final String MONITORING_PERMISSION = 'Monitor_Platform_Events';
-    // public static final String MSG_MISSING_PERMISSIONS = 'User must have permission to monitor platform events! Missing: '
-    //  + MONITORING_PERMISSION;
      
     @testVisible
     public static List<EventBusSubscriber> subscriptionInfo {
