@@ -5,7 +5,10 @@
     <p/>
     
     <apex:pageBlock rendered="{!!$Permission.Monitor_Platform_Events}">
-    	<apex:pageMessages showDetail="true" id="errors" />
+        <apex:pageMessage severity="error" 
+        strength="1" 
+        summary="{!$Label.Monitor_Platform_Events}" 
+        />
     </apex:pageBlock>
 
     <apex:pageBlock rendered="{!$Permission.Monitor_Platform_Events}">
